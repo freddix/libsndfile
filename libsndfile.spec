@@ -1,11 +1,12 @@
 Summary:	C library for reading and writing files containing sampled sound
 Name:		libsndfile
 Version:	1.0.25
-Release:	4
+Release:	5
 License:	LGPL v2.1+
 Group:		Development/Libraries
 Source0:	http://www.mega-nerd.com/libsndfile/files/%{name}-%{version}.tar.gz
 # Source0-md5:	e2b7bb637e01022c7d20f95f9c3990a2
+Patch0:		%{name}-libs.patch
 URL:		http://www.mega-nerd.com/libsndfile/
 BuildRequires:	alsa-lib-devel
 BuildRequires:	autoconf
@@ -37,6 +38,7 @@ Header files and development documentation for libsndfile.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %{__libtoolize}
@@ -44,6 +46,7 @@ Header files and development documentation for libsndfile.
 %{__autoconf}
 %{__automake}
 %configure \
+        --disable-silent-rules	\
 	--disable-static
 %{__make}
 
@@ -53,8 +56,8 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-rm -rf $RPM_BUILD_ROOT%{_docdir}/libsndfile1-dev
-rm -rf $RPM_BUILD_ROOT%{_datadir}/octave/site/m
+%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/libsndfile1-dev
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -74,7 +77,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc doc/*.html doc/*.jpg doc/new_file_type.HOWTO
 %attr(755,root,root) %{_libdir}/libsndfile.so
-%{_libdir}/libsndfile.la
 %{_includedir}/sndfile.h*
 %{_pkgconfigdir}/sndfile.pc
 

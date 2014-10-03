@@ -1,0 +1,12 @@
+diff -aurN libsndfile-1.0.25.oig/configure.ac libsndfile-1.0.25/configure.ac
+--- libsndfile-1.0.25.oig/configure.ac	2011-07-13 10:59:57.000000000 +0200
++++ libsndfile-1.0.25/configure.ac	2014-10-03 22:32:11.000000000 +0200
+@@ -335,7 +335,7 @@
+ 		enable_external_libs=yes
+ 
+ 		EXTERNAL_CFLAGS="$FLAC_CFLAGS $OGG_CFLAGS $VORBISENC_CFLAGS $SPEEX_CFLAGS"
+-		EXTERNAL_LIBS="$FLAC_LIBS $VORBISENC_LIBS $SPEEX_LIBS"
++		EXTERNAL_LIBS="$FLAC_LIBS $VORBISENC_LIBS -lvorbis -logg $SPEEX_LIBS"
+ 	else
+ 		echo
+ 		AC_MSG_WARN([[*** One or more of the external libraries (ie libflac, libogg and]])
